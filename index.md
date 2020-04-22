@@ -1,4 +1,14 @@
+ Username's WPI Web Site
 
+Username's WPI Web Site
+=======================
+
+* * *
+
+Links
+-----
+
+[**IMGD-2900: Digital Game Design I**](IMGD-2900/index.md)
 
 ### Jekyll Themes
 
