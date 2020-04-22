@@ -5,7 +5,7 @@ Blue Ocean's Web Site
 
 * * *
 
-#Links
+Links
 -----
 
 [**IMGD-2900: Digital Game Design I**](IMGD-2900/index.md)
