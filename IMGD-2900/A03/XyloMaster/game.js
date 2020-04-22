@@ -20,23 +20,17 @@ GNU Lesser General Public License for more details.
 You may have received a copy of the GNU Lesser General Public License
 along with the Perlenspiel devkit. If not, see <http://www.gnu.org/licenses/>.
 */
-
 /*
-This JavaScript file is a template for creating new Perlenspiel 3.3.x games.
-By default, all event-handling function templates are COMMENTED OUT (using block-comment syntax), and are therefore INACTIVE.
-Uncomment and add code to the event handlers required by your project.
-Any unused event-handling function templates can be safely deleted.
-Refer to the tutorials and documentation at <https://ps3.perlenspiel.net> for details.
-*/
 
-/*
-The following comment lines are for JSHint <https://jshint.com>, a tool for monitoring code quality.
-You may find them useful if your development environment is configured to support JSHint.
-If you don't use JSHint (or are using it with a configuration file), you can safely delete these lines.
-*/
+Keval Ashara
+Team Cosmic Whale
+1: Changed status color to say "CLick Grid"
+2: Moving mouse outside of grid resets all the grid colors
+3: Click sound replaced wist random Xylophone sound
+4: Cursor is redundancy with a "~" on the selected block
+5: Random Colored for the clicked block
 
-/* jshint browser : true, devel : true, esversion : 5, freeze : true */
-/* globals PS : true */
+*/
 
 /*
 PS.init( system, options )
@@ -48,25 +42,25 @@ Any value returned is ignored.
 [options : Object] = A JavaScript object with optional data properties; see API documentation for details.
 */
 
-PS.init = function( system, options ) {
-	"use strict"; // Do not remove this directive!
+PS.init = function (system, options) {
+    "use strict"; // Do not remove this directive!
 
-	// Establish grid dimensions
-	
-	PS.gridSize( 8, 8 );
-	
-	// Set background color to Perlenspiel logo gray
-	
-	PS.gridColor( 0x303030 );
-	
-	// Change status line color and text
+    // Establish grid dimensions
 
-	PS.statusColor( PS.COLOR_WHITE );
-	PS.statusText( "Touch any bead" );
-	
-	// Preload click sound
+    PS.gridSize(5, 5);
+    PS.border(PS.ALL, PS.ALL, 0);
 
-	PS.audioLoad( "fx_click" );
+    PS.gridColor(PS.COLOR_GRAY_DARK);
+    PS.data(PS.ALL, PS.ALL, PS.COLOR_WHITE);
+    // Change status line color and text
+
+    PS.statusColor(PS.COLOR_WHITE);
+    PS.statusText("Click grid");
+
+    // Preload the xylophone
+    for (var i = 1; i < 40; i++) {
+        PS.audioLoad(PS.xylophone(i));
+    }
 };
 
 /*
@@ -79,33 +73,21 @@ This function doesn't have to do anything. Any value returned is ignored.
 [options : Object] = A JavaScript object with optional data properties; see API documentation for details.
 */
 
-PS.touch = function( x, y, data, options ) {
-	"use strict"; // Do not remove this directive!	
-	var next;
+PS.touch = function (x, y, data, options) {
+    "use strict"; // Do not remove this directive!
+    let next;
+    PS.color(x, y, data); // set color to value of data
+    next = (data === PS.COLOR_BLACK) ? PS.COLOR_WHITE : PS.COLOR_BLACK;
 
-	// Toggle color of touched bead from white to black and back again
-	// NOTE: The default value of a bead's [data] is 0, which equals PS.COLOR_BLACK
+    // Remember the newly-changed color by storing it in the bead's data
 
-	PS.color( x, y, data ); // set color to value of data
-	
-	// Decide what the next color should be
-	
-	if ( data === PS.COLOR_BLACK ) {
-		next = PS.COLOR_WHITE;
-	} else {
-		next = PS.COLOR_BLACK;
-	}
-	
-	// NOTE: The above statement could also be expressed using JavaScript's ternary operator:
-	// next = ( data === PS.COLOR_BLACK ) ? PS.COLOR_WHITE : PS.COLOR_BLACK;
-	
-	// Remember the newly-changed color by storing it in the bead's data
-	
-	PS.data( x, y, next );
+    PS.data(x, y, next);
 
-	// Play click sound
+    PS.color(x, y, PS.random(255), PS.random(255), PS.random(255));
 
-	PS.audioPlay( "fx_click" );
+    // Play click sound
+
+    PS.audioPlay(PS.xylophone(PS.random(39)));
 };
 
 /*
@@ -146,19 +128,22 @@ This function doesn't have to do anything. Any value returned is ignored.
 
 // UNCOMMENT the following code BLOCK to expose the PS.enter() event handler:
 
-/*
 
-PS.enter = function( x, y, data, options ) {
-	"use strict"; // Do not remove this directive!
+PS.enter = function (x, y, data, options) {
+    "use strict"; // Do not remove this directive!
+    let colour;
+    // Uncomment the following code line to inspect x/y parameters:
+    //PS.debug( "PS.enter() @ " + x + ", " + y + "\n" );
+    // Add code here for when the mouse cursor/touch enters a bead.
 
-	// Uncomment the following code line to inspect x/y parameters:
+    PS.glyph(x, y, "~");
+    colour = (data === PS.COLOR_BLACK);
 
-	// PS.debug( "PS.enter() @ " + x + ", " + y + "\n" );
-
-	// Add code here for when the mouse cursor/touch enters a bead.
+    if (colour) {
+        PS.glyphColor(x, y, PS.COLOR_WHITE);
+    }
 };
 
-*/
 
 /*
 PS.exit ( x, y, data, options )
@@ -172,19 +157,13 @@ This function doesn't have to do anything. Any value returned is ignored.
 
 // UNCOMMENT the following code BLOCK to expose the PS.exit() event handler:
 
-/*
-
-PS.exit = function( x, y, data, options ) {
-	"use strict"; // Do not remove this directive!
-
-	// Uncomment the following code line to inspect x/y parameters:
-
-	// PS.debug( "PS.exit() @ " + x + ", " + y + "\n" );
-
-	// Add code here for when the mouse cursor/touch exits a bead.
+PS.exit = function (x, y, data, options) {
+    "use strict"; // Do not remove this directive!
+    // Uncomment the following code line to inspect x/y parameters:
+    // PS.debug( "PS.exit() @ " + x + ", " + y + "\n" );
+    // Add code here for when the mouse cursor/touch exits a bead.
+    PS.glyph(x, y, 0);
 };
-
-*/
 
 /*
 PS.exitGrid ( options )
@@ -195,19 +174,17 @@ This function doesn't have to do anything. Any value returned is ignored.
 
 // UNCOMMENT the following code BLOCK to expose the PS.exitGrid() event handler:
 
-/*
 
-PS.exitGrid = function( options ) {
-	"use strict"; // Do not remove this directive!
+PS.exitGrid = function (options) {
+    "use strict"; // Do not remove this directive!
 
-	// Uncomment the following code line to verify operation:
-
-	// PS.debug( "PS.exitGrid() called\n" );
-
-	// Add code here for when the mouse cursor/touch moves off the grid.
+    // Uncomment the following code line to verify operation:
+    // PS.debug("PS.exitGrid() called\n")
+    // Add code here for when the mouse cursor/touch moves off the grid.
+    PS.color(PS.ALL, PS.ALL, PS.COLOR_WHITE);
+    PS.data(PS.ALL, PS.ALL, PS.COLOR_WHITE);
 };
 
-*/
 
 /*
 PS.keyDown ( key, shift, ctrl, options )
