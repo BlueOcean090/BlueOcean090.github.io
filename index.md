@@ -1,11 +1,11 @@
- Username's WPI Web Site
+ Blue Ocean's Web Site
 
-Username's WPI Web Site
+Blue Ocean's Web Site
 =======================
 
 * * *
 
-Links
+#Links
 -----
 
 [**IMGD-2900: Digital Game Design I**](IMGD-2900/index.md)
