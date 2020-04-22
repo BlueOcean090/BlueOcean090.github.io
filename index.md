@@ -8,7 +8,7 @@ Blue Ocean's Web Site
 Links
 -----
 
-[**IMGD-2900: Digital Game Design I**](IMGD-2900/index.md)
+[**IMGD-2900: Digital Game Design I**](IMGD-2900/index.html)
 
 ### Jekyll Themes
 
