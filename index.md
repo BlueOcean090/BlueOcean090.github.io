@@ -1,14 +1,14 @@
- Blue Ocean's Web Site
-
-Blue Ocean's Web Site
-=======================
-
-* * *
+Hello and welcome to my website
 
 Links
 -----
 
 [**IMGD-2900: Digital Game Design I**](IMGD-2900/index.html)
+
+
+[** Virus.exe**](https://youtu.be/dQw4w9WgXcQ)
+
+
 
 ### Jekyll Themes
 
